@@ -1,6 +1,6 @@
 [package]
 name = "gpu-allocator"
-version = "0.28.0"
+version = "0.28.1"
 authors = ["Traverse Research <opensource@traverseresearch.nl>"]
 edition = "2021"
 license = "MIT OR Apache-2.0"
@@ -28,9 +28,9 @@ thiserror = { version = "2.0", default-features = false }
 presser = { version = "0.3", default-features = false }
 # Only needed for Vulkan.  Disable all default features as good practice,
 # such as the ability to link/load a Vulkan library.
-# xynok fork: ash git master (Vulkan 1.4), pinned to the same rev as xynok_vulkan so cargo
-# unifies the two. Bump both together.
-ash = { git = "https://github.com/ash-rs/ash.git", rev = "f4c2ca3e4f6b998d5254ad101a32f024d87cdec2", optional = true, default-features = false, features = ["debug"] }
+# xynok fork: ash git master (Vulkan 1.4). The rev lives in the xynok workspace, so this crate and
+# xynok_vulkan always build against the same ash.
+ash = { workspace = true, optional = true, features = ["debug"] }
 # Only needed for visualizer.
 egui = { version = ">=0.24, <=0.27", optional = true, default-features = false }
 egui_extras = { version = ">=0.24, <=0.27", optional = true, default-features = false }
@@ -61,7 +61,7 @@ optional = true
 
 [dev-dependencies]
 # Enable the "loaded" feature to be able to access the Vulkan entrypoint.
-ash = { git = "https://github.com/ash-rs/ash.git", rev = "f4c2ca3e4f6b998d5254ad101a32f024d87cdec2", default-features = false, features = ["debug", "loaded"] }
+ash = { workspace = true, features = ["debug", "loaded"] }
 env_logger = "0.11"
 
 [target.'cfg(windows)'.dev-dependencies.windows]
